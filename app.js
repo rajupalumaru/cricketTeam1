@@ -37,5 +37,11 @@ const convertDbObjectToResponseObject = dbObject => {
 }
 
 app.get('/players/', async (request, response) => {
-  response.send('Hi')
+  const getPlayersQuery = `
+  select * from cricket_team;`
+  const playersArray = await db.all(getPlayersQuery)
+  response.send(
+    playersArray.map(eachPlayer => convertDbObjectToResponseObject(eachPlayer)),
+  )
 })
+
