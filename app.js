@@ -45,3 +45,10 @@ app.get('/players/', async (request, response) => {
   )
 })
 
+app.get('/players/:playerId/', async (request, response) => {
+  const {playerId} = request.params
+  const getPlayerQuery = `
+  select * from cricket_team where player_id = ${playerId};`
+  const player = await db.get(getPlayerQuery)
+  response.send(convertDbObjectToResponseObject(player))
+})
